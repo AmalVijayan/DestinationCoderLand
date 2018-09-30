@@ -6,38 +6,32 @@ for i in range(T):
     N = int(input("Number of Check Points : ").strip())
     
     #enter the list of Cost od petrol per liter at each check point
-    cpl = list(input("Enter {}  costs seperated by space : ".format(N)).strip())
+    cpl = list(map(int,input("Enter {}  costs ".format(N)).split()))
     
     #remove all extra spaces and convert each element to integer
     for i in cpl:
         if i==' ':
             cpl.remove(i)
-    for i in cpl:
-        cpl[cpl.index(i)] = int(i)
+    cpl=list(map(int,cpl))
+    
 
     #enter the litres of petrol needed to reach each cp
-    lcp = list(input("Enter {} numbers(Petrol required to reach each check point) seperated by space : ".format(N)).strip())
+    lcp = list(map(int,input("Enter {} numbers(Petrol required to reach each check point) seperated by space : ".format(N)).split()))
     
     #remove all extra spaces and convert each element to integer
     for i in lcp:
         if i==' ':
             lcp.remove(i)
-    for i in lcp:
-        lcp[lcp.index(i)] = int(i)
-    
-    # a function to get total petrol required
-    def total_lp(x):
-        tot = 0
-        for i in x:
-            tot = tot + i
-        return tot
+    lcp=list(map(int,lcp))
+  
+
 
 
     # Min petrol cost
     mpc = min(cpl)
     
     #total amount of petrol rewuired to reach destination
-    Total_petrol_needed = total_lp(lcp)
+    Total_petrol_needed = sum(lcp)
     print("Total petrol needed to reach destination : {}".format(Total_petrol_needed))
     
     #initializing best price
@@ -52,7 +46,7 @@ for i in range(T):
     else:
         bp=0
         mini=cpl[0]
-        while(True):
+        while cpl:
             i=0
             if cpl[i] != min(cpl):
                 if cpl[i] > mini:
@@ -62,9 +56,10 @@ for i in range(T):
                     bp = cpl[i] * lcp[i] + bp
                 del cpl[i]
                 del lcp[i]
-                pet_req = total_lp(lcp)
+                pet_req = sum(lcp)
             else:
                 bp = bp + cpl[i] * pet_req
                 break
         print("The best cost for reaching Coderland is : ",bp)
+
 
